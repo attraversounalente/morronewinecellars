@@ -1,0 +1,55 @@
+#import streamlit as st
+import pandas as pd
+
+# Wine aging and flavor data
+wine_data = {
+    "Wine Type": [
+        "Cabernet Sauvignon", "Merlot", "Pinot Noir", "Syrah/Shiraz", "Malbec",
+        "Zinfandel", "Tempranillo", "Nebbiolo (Barolo, Barbaresco)", "Sangiovese (Chianti, Brunello)",
+        "Grenache/Garnacha", "Barbera", "Mourvèdre/Monastrell", "Petite Sirah", "Carmenere",
+        "Brunello di Montalcino", "Amarone della Valpolicella", "Chianti Classico", "Barolo",
+        "Barbaresco", "Rioja", "Côtes du Rhône / Châteauneuf-du-Pape", "Super Tuscan",
+        "Malbec (Argentina, France)", "Cabernet Franc", "Tannat", "Aglianico (Taurasi)",
+        "Chardonnay", "Sauvignon Blanc", "Riesling", "Champagne", "Prosecco", "Port", "Sauternes"
+    ],
+    "Recommended Aging": [
+        "7-15 years (up to 30+ years for premium)", "5-10 years", "3-10 years", "10-20+ years", "3-10 years",
+        "5-10 years", "3-20+ years", "15-30+ years", "5-30+ years",
+        "5-15+ years", "3-8 years", "5-15+ years", "10-20 years", "5-10 years",
+        "10-30 years", "10-20+ years", "5-20 years", "15-30+ years", "8-20 years", "3-30+ years",
+        "3-20 years", "10-20+ years", "3-20 years", "5-20+ years",
+        "10-20+ years", "10-25+ years", "5-10 years", "1-3 years (5-10 years for complex styles)",
+        "10-20+ years", "3-5 years (10-15+ for vintage)", "1-2 years", "10-50+ years (Vintage)", "10-20+ years"
+    ],
+    "Flavor Profile": [
+        "Complex tannins, dark fruit", "Smooth, mellow with age", "Fruit-forward, earthy", "Bold, spicy, earthy", "Ripe fruit, spice",
+        "Fruit-forward, spice, complex with age", "Dried fruit, leather", "Tar, roses, truffle, dried fruit", "Leather, herbs, dried cherry",
+        "Earthy, herbal, spice", "Fruity, softens with age", "Earthy, dark fruit", "Dense, bold tannins", "Herbal, dark fruit",
+        "Earthy, dried fruit, tobacco", "Rich, concentrated, dried fruit, chocolate", "Cherry, leather, earthy", "Tar, roses, truffle",
+        "Florals, earthy tones", "Dried fruit, leather, tobacco", "Herbal, earthy, spice", "Rich fruit, acidity from Sangiovese",
+        "Dark fruit, earthy (Argentina), bold tannins (France)", "Bell pepper, graphite, dark berries", "Dark fruit, earthy", "Dark fruit, leather",
+        "Buttery, tropical, complex", "Citrusy, herbaceous", "Petrol, stone fruit, floral", "Brioche, apple, nutty with age", "Fresh, fruity",
+        "Dried fruit, rich, nutty", "Honey, apricot, floral, rich"
+    ]
+}
+
+# Convert data to a DataFrame for easy access
+wine_df = pd.DataFrame(wine_data)
+
+# Streamlit app layout
+st.title("Wine Aging & Flavor Profile Guide")
+
+# Dropdown to select wine type
+wine_type = st.selectbox("Select a wine type", wine_df["Wine Type"].unique())
+
+# Dropdown to select the year of the wine
+year = st.selectbox("Select the vintage year", range(1950, 2025))
+
+# Filter the wine information based on the selection
+selected_wine = wine_df[wine_df["Wine Type"] == wine_type].iloc[0]
+
+# Display the results
+st.subheader(f"Recommended Aging for {wine_type}")
+st.write(f"**Recommended Aging Window:** {selected_wine['Recommended Aging']}")
+st.write(f"**Flavor Profile:** {selected_wine['Flavor Profile']}")
+st.write(f"**Vintage Year Selected:** {year}")
